@@ -1,0 +1,11 @@
+C:\Users\andre\Desktop\CMPE2965\InvKinTester\InvKinTester\bin\Debug\InvKinTester.exe.config
+C:\Users\andre\Desktop\CMPE2965\InvKinTester\InvKinTester\bin\Debug\InvKinTester.exe
+C:\Users\andre\Desktop\CMPE2965\InvKinTester\InvKinTester\bin\Debug\InvKinTester.pdb
+C:\Users\andre\Desktop\CMPE2965\InvKinTester\InvKinTester\obj\Debug\InvKinTester.csproj.AssemblyReference.cache
+C:\Users\andre\Desktop\CMPE2965\InvKinTester\InvKinTester\obj\Debug\InvKinTester.csproj.SuggestedBindingRedirects.cache
+C:\Users\andre\Desktop\CMPE2965\InvKinTester\InvKinTester\obj\Debug\InvKinTester.Form1.resources
+C:\Users\andre\Desktop\CMPE2965\InvKinTester\InvKinTester\obj\Debug\InvKinTester.Properties.Resources.resources
+C:\Users\andre\Desktop\CMPE2965\InvKinTester\InvKinTester\obj\Debug\InvKinTester.csproj.GenerateResource.cache
+C:\Users\andre\Desktop\CMPE2965\InvKinTester\InvKinTester\obj\Debug\InvKinTester.csproj.CoreCompileInputs.cache
+C:\Users\andre\Desktop\CMPE2965\InvKinTester\InvKinTester\obj\Debug\InvKinTester.exe
+C:\Users\andre\Desktop\CMPE2965\InvKinTester\InvKinTester\obj\Debug\InvKinTester.pdb

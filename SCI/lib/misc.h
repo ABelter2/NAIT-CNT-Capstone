@@ -1,0 +1,51 @@
+/////////////////////////////////////////////////////////////////////////////
+// Processor:     MC9S12XDP512
+// Bus Speed:     20 MHz (Requires Active PLL)
+// Author:        Andrew Belter
+// Details:       Misc lib functions to be added here as needed for convenience
+// Revision History
+//      Created:
+//      each revision will have a date + desc. of changes
+/////////////////////////////////////////////////////////////////////////////
+
+typedef enum PortJ_Option
+{
+    PortJ_Option_Off = 0,
+    PortJ_Option_On = 1
+} PortJ_Option;
+
+/////////////////////////////////////////////////////////////////////////////
+// Library Prototypes
+/////////////////////////////////////////////////////////////////////////////
+
+//set up Port J for interrupts
+void PortJ_Init(PortJ_Option pj0, PortJ_Option pj1);
+
+//convert a time in ms to a string in format hh:mm:ss.ms (ms to nearest 100ms (seconds rounded to 1 decimal place))
+char *FormatTimeMs(unsigned long ms);
+
+/////////////////////////////////////////////////////////////////////////////
+// Hidden Helpers (local to implementation only)
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Code Templates
+/////////////////////////////////////////////////////////////////////////////
+/*
+interrupt VectorNumber_Vportj void IntJ(void)
+{
+    // read of PIFJ (22.3.2.61)
+  if (PIFJ_PIFJ0) 
+  {
+    // acknowledge interrupt
+    PIFJ = PIFJ_PIFJ0_MASK;
+  }
+
+  if (PIFJ_PIFJ1)
+  {
+    // acknowledge interrupt
+    PIFJ = PIFJ_PIFJ1_MASK;
+  }
+}
+*/
