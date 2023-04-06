@@ -1,0 +1,43 @@
+Z:\Nait stuff\Term 3\CMPE2250\PWM_Calculator\PWM_Calculator\bin\Debug\PWM_Calculator.exe.config
+Z:\Nait stuff\Term 3\CMPE2250\PWM_Calculator\PWM_Calculator\bin\Debug\PWM_Calculator.exe
+Z:\Nait stuff\Term 3\CMPE2250\PWM_Calculator\PWM_Calculator\bin\Debug\PWM_Calculator.pdb
+Z:\Nait stuff\Term 3\CMPE2250\PWM_Calculator\PWM_Calculator\obj\Debug\PWM_Calculator.csproj.AssemblyReference.cache
+Z:\Nait stuff\Term 3\CMPE2250\PWM_Calculator\PWM_Calculator\obj\Debug\PWM_Calculator.Form1.resources
+Z:\Nait stuff\Term 3\CMPE2250\PWM_Calculator\PWM_Calculator\obj\Debug\PWM_Calculator.Properties.Resources.resources
+Z:\Nait stuff\Term 3\CMPE2250\PWM_Calculator\PWM_Calculator\obj\Debug\PWM_Calculator.csproj.GenerateResource.cache
+Z:\Nait stuff\Term 3\CMPE2250\PWM_Calculator\PWM_Calculator\obj\Debug\PWM_Calculator.csproj.CoreCompileInputs.cache
+Z:\Nait stuff\Term 3\CMPE2250\PWM_Calculator\PWM_Calculator\obj\Debug\PWM_Calculator.exe
+Z:\Nait stuff\Term 3\CMPE2250\PWM_Calculator\PWM_Calculator\obj\Debug\PWM_Calculator.pdb
+E:\CMPE2250\PWM_Calculator - 8Bit\PWM_Calculator\bin\Debug\PWM_Calculator.exe.config
+E:\CMPE2250\PWM_Calculator - 8Bit\PWM_Calculator\bin\Debug\PWM_Calculator.exe
+E:\CMPE2250\PWM_Calculator - 8Bit\PWM_Calculator\bin\Debug\PWM_Calculator.pdb
+E:\CMPE2250\PWM_Calculator - 8Bit\PWM_Calculator\obj\Debug\PWM_Calculator.csproj.AssemblyReference.cache
+E:\CMPE2250\PWM_Calculator - 8Bit\PWM_Calculator\obj\Debug\PWM_Calculator.csproj.SuggestedBindingRedirects.cache
+E:\CMPE2250\PWM_Calculator - 8Bit\PWM_Calculator\obj\Debug\PWM_Calculator.Form1.resources
+E:\CMPE2250\PWM_Calculator - 8Bit\PWM_Calculator\obj\Debug\PWM_Calculator.Properties.Resources.resources
+E:\CMPE2250\PWM_Calculator - 8Bit\PWM_Calculator\obj\Debug\PWM_Calculator.csproj.GenerateResource.cache
+E:\CMPE2250\PWM_Calculator - 8Bit\PWM_Calculator\obj\Debug\PWM_Calculator.csproj.CoreCompileInputs.cache
+E:\CMPE2250\PWM_Calculator - 8Bit\PWM_Calculator\obj\Debug\PWM_Calculator.exe
+E:\CMPE2250\PWM_Calculator - 8Bit\PWM_Calculator\obj\Debug\PWM_Calculator.pdb
+E:\CMPE2250\PWM_Calculator\PWM_Calculator\bin\Debug\PWM_Calculator.exe.config
+E:\CMPE2250\PWM_Calculator\PWM_Calculator\bin\Debug\PWM_Calculator.exe
+E:\CMPE2250\PWM_Calculator\PWM_Calculator\bin\Debug\PWM_Calculator.pdb
+E:\CMPE2250\PWM_Calculator\PWM_Calculator\obj\Debug\PWM_Calculator.csproj.AssemblyReference.cache
+E:\CMPE2250\PWM_Calculator\PWM_Calculator\obj\Debug\PWM_Calculator.csproj.SuggestedBindingRedirects.cache
+E:\CMPE2250\PWM_Calculator\PWM_Calculator\obj\Debug\PWM_Calculator.Form1.resources
+E:\CMPE2250\PWM_Calculator\PWM_Calculator\obj\Debug\PWM_Calculator.Properties.Resources.resources
+E:\CMPE2250\PWM_Calculator\PWM_Calculator\obj\Debug\PWM_Calculator.csproj.GenerateResource.cache
+E:\CMPE2250\PWM_Calculator\PWM_Calculator\obj\Debug\PWM_Calculator.csproj.CoreCompileInputs.cache
+E:\CMPE2250\PWM_Calculator\PWM_Calculator\obj\Debug\PWM_Calculator.exe
+E:\CMPE2250\PWM_Calculator\PWM_Calculator\obj\Debug\PWM_Calculator.pdb
+F:\CMPE2250\PWM_Calculator\PWM_Calculator\bin\Debug\PWM_Calculator.exe.config
+F:\CMPE2250\PWM_Calculator\PWM_Calculator\bin\Debug\PWM_Calculator.exe
+F:\CMPE2250\PWM_Calculator\PWM_Calculator\bin\Debug\PWM_Calculator.pdb
+F:\CMPE2250\PWM_Calculator\PWM_Calculator\obj\Debug\PWM_Calculator.csproj.AssemblyReference.cache
+F:\CMPE2250\PWM_Calculator\PWM_Calculator\obj\Debug\PWM_Calculator.csproj.SuggestedBindingRedirects.cache
+F:\CMPE2250\PWM_Calculator\PWM_Calculator\obj\Debug\PWM_Calculator.Form1.resources
+F:\CMPE2250\PWM_Calculator\PWM_Calculator\obj\Debug\PWM_Calculator.Properties.Resources.resources
+F:\CMPE2250\PWM_Calculator\PWM_Calculator\obj\Debug\PWM_Calculator.csproj.GenerateResource.cache
+F:\CMPE2250\PWM_Calculator\PWM_Calculator\obj\Debug\PWM_Calculator.csproj.CoreCompileInputs.cache
+F:\CMPE2250\PWM_Calculator\PWM_Calculator\obj\Debug\PWM_Calculator.exe
+F:\CMPE2250\PWM_Calculator\PWM_Calculator\obj\Debug\PWM_Calculator.pdb

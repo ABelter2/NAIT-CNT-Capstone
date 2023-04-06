@@ -17,6 +17,7 @@
 #include "segs.h"       /* 7 segs library */
 #include "swled.h"      /* switches and LEDs */
 #include "timer.h"      /* timer library */
+#include "pulse.h"      /* PWM Library */
 
 // other system includes or your includes go here
 // #include <stdlib.h>
@@ -64,19 +65,22 @@ void UpdateSortingColour(SortingTestColour currentSortingColour);
 void PerformTest(SelectedTest currentTest, SortingTestColour currentSortingColour);
 void ChipIsolatorTest(void);
 void ColourIdentificationTest(void);
-void DisplayIdentifiedColour(Colours colour);
+void UpdateColour(Colours colour);
 void ChipSortingTest(SortingTestColour currentSortingColour);
 
 /////////////////////////////////////////////////////////////////////////////
 // Global Variables
 /////////////////////////////////////////////////////////////////////////////
 
-const unsigned long GlobalBusRate = 20E6; // the board bus rate
-volatile unsigned int buttonLockout = 0;  // the lockout for switch debouncing
+volatile unsigned int buttonLockout = 0; // the lockout for switch debouncing
 
 /////////////////////////////////////////////////////////////////////////////
 // Constants
 /////////////////////////////////////////////////////////////////////////////
+
+const unsigned long GlobalBusRate = 20E6; // the board bus rate
+const unsigned int MinServoDuty = 350;    // min servo duty cycle for lowest servo position
+const unsigned int MaxServoDuty = 1250;   // max servo duty cycle for furthest servo position
 
 /////////////////////////////////////////////////////////////////////////////
 // Main Entry
@@ -103,7 +107,9 @@ void main(void)
   LCD_Init();
   Segs_Init();
   PIT_Init(PIT_Channel_0, PIT_Interrupt_On, GlobalBusRate, 10000); // PIT0 @ 10ms intervals, interrupts on
-  SCI0_Init(GlobalBusRate, BaudRate_9600, SCI_RDRF_InterruptOff);  // SCI0 @ 9600 bause
+  SCI0_Init(GlobalBusRate, BaudRate_9600, SCI_RDRF_InterruptOff);  // SCI0 @ 9600 baud
+  Pulse_Init_16Bit(Pulse_Channel7, Pulse_PrescaleStage1_1, 20, Pulse_PolatityPositive, 10000, 0);
+
   UpdateTestDisplay(currentTest);
   SWLSet(SWLGreen);
 
@@ -252,9 +258,13 @@ void PerformTest(SelectedTest currentTest, SortingTestColour currentSortingColou
 // performs the chip isolator test
 void ChipIsolatorTest()
 {
-  // move servo in to grab one chip
+  // move slot fully forward (servo to max) and sleep
+  Pulse_SetDuty_16Bit(Pulse_Channel7, MinServoDuty);
+  PIT_Sleep_ms(PIT_Channel_1, GlobalBusRate, 500);
 
-  // move servo out to extract one chip
+  // move slot fully out (servo to min) and sleep
+  Pulse_SetDuty_16Bit(Pulse_Channel7, MaxServoDuty);
+  PIT_Sleep_ms(PIT_Channel_1, GlobalBusRate, 500);
 }
 
 // performs the colour identification test
@@ -265,17 +275,19 @@ void ColourIdentificationTest()
   // send start signal 'a' (for analyse) with SCI0
   SCI0_TxByte_Block('a');
 
-  // blocking wait for returned colour character from SCI0
-  colour = SCI0_BRead();
+  // use a loop to read from SCI0 - allows for breaking from the loop with an exit condition
+  //  would have to check the exit condition after so it does not continue
+  while (SCI0_Read(&colour))
+    ;
 
   // echo the received character back as an acknowledgement of recieval
   // SCI0_TxByte_Block((unsigned char)colour);//debug line
 
   // display the colour on the LCD
-  DisplayIdentifiedColour(colour);
+  UpdateColour(colour);
 }
 
-void DisplayIdentifiedColour(Colours colour)
+void UpdateColour(Colours colour)
 {
   // display the colour on the LCD
   switch (colour)

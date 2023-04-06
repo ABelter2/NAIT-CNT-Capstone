@@ -24,13 +24,14 @@
 // local prototypes
 /////////////////////////////////////////////////////////////////////////////
 void Cap_MotorStep(unsigned char mask);
-void Cap_SetMotorDirection(unsigned char motorDirectionMask, unsigned int currentStep, unsigned int targetStep);
+void Cap_SetMotorDirection(unsigned char motorDirectionMask, int currentStep, int targetStep);
 
 // inverse kinematics functions translated from JavaScript (source : https://www.marginallyclever.com/other/samples/fk-ik-test.html)
 
 void Cap_InitInvKinGlobals(void);
 unsigned char Cap_CalcAngleXYZ(float x, float y, float z, float *theta);
 unsigned char Cap_CalcInvKin(float *thetas, float x, float y, float z);
+int Cap_AngleToStep(float theta);
 
 /////////////////////////////////////////////////////////////////////////////
 // library variables
@@ -87,11 +88,11 @@ void Cap_PortAToggle(unsigned char mask)
 }
 
 // Moves the effector the to requried position based on the target step for each motor
-void Cap_MoveEffector(unsigned int m1TargetStep, unsigned int m2TargetStep, unsigned int m3TargetStep)
+void Cap_MoveEffector(int m1TargetStep, int m2TargetStep, int m3TargetStep)
 {
-    static unsigned int m1CurrentStep = 0;
-    static unsigned int m2CurrentStep = 0;
-    static unsigned int m3CurrentStep = 0;
+    static int m1CurrentStep = 0;
+    static int m2CurrentStep = 0;
+    static int m3CurrentStep = 0;
     unsigned char motorsToMove = 0;
 
     // setup the direction bits for all the motors before starting to step
@@ -110,11 +111,23 @@ void Cap_MoveEffector(unsigned int m1TargetStep, unsigned int m2TargetStep, unsi
 
         // check which motors still need to move, adding their StepPulse to the motorsToMove mask if they need to
         if (m1CurrentStep != m1TargetStep)
+        {
             motorsToMove |= Motor1StepPulse;
+            // m1CurrentStep = Cap_PortARead(Motor1Direction) ? m1CurrentStep + 1 : m1CurrentStep - 1;//dir high = increase step
+            m1CurrentStep = Cap_PortARead(Motor1Direction) ? m1CurrentStep - 1 : m1CurrentStep + 1;//dir high = decrease step
+        }
         if (m2CurrentStep != m2TargetStep)
+        {
             motorsToMove |= Motor2StepPulse;
+            // m2CurrentStep = Cap_PortARead(Motor2Direction) ? m2CurrentStep + 1 : m2CurrentStep - 1;//dir high = increase step
+            m2CurrentStep = Cap_PortARead(Motor2Direction) ? m2CurrentStep - 1 : m2CurrentStep + 1;//dir high = decrease step
+        }
         if (m3CurrentStep != m3TargetStep)
+        {
             motorsToMove |= Motor3StepPulse;
+            // m3CurrentStep = Cap_PortARead(Motor3Direction) ? m3CurrentStep + 1 : m3CurrentStep - 1;//dir high = increase step
+            m3CurrentStep = Cap_PortARead(Motor3Direction) ? m3CurrentStep - 1 : m3CurrentStep + 1;//dir high = decrease step
+        }
 
         // if there are motors to move, step them
         if (motorsToMove)
@@ -141,16 +154,16 @@ void Cap_MotorStep(unsigned char mask)
 
 // Sets or clears the motor's direction bit based on if the motor's current step is above or below the target step
 // Bit does not change if currentStep = targetStep
-void Cap_SetMotorDirection(unsigned char motorDirectionMask, unsigned int currentStep, unsigned int targetStep)
+void Cap_SetMotorDirection(unsigned char motorDirectionMask, int currentStep, int targetStep)
 {
     // if the current step count is less than the target count,
-    // set the direction bit to increase step count while stepping
+    // clear the direction bit to increase step count while stepping
     if (currentStep < targetStep)
-        Cap_PortASet(motorDirectionMask);
+        Cap_PortAClear(motorDirectionMask);//dir low = increase step
     // if the current step count is greater than the target count,
-    // clear the direction bit to decrease step count while stepping
+    // set the direction bit to decrease step count while stepping
     else if (currentStep > targetStep)
-        Cap_PortAClear(motorDirectionMask);
+        Cap_PortASet(motorDirectionMask);//dir high = decrease step
 }
 
 // inverse kinematics functions translated from JavaScript (source : https://www.marginallyclever.com/other/samples/fk-ik-test.html)
@@ -210,4 +223,10 @@ unsigned char Cap_CalcInvKin(float *thetas, float x0, float y0, float z0)
     thetas[2] = theta3;
 
     return 0;
+}
+
+// converts an angle (in degrees) to a step number
+int Cap_AngleToStep(float theta)
+{
+    return (int)(theta * StepsPerRev / 360);
 }

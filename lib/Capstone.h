@@ -31,7 +31,7 @@ void Cap_PortASet(unsigned char mask);
 void Cap_PortAClear(unsigned char mask);
 void Cap_PortAToggle(unsigned char mask);
 
-void Cap_MoveEffector(unsigned int m1TargetStep, unsigned int m2TargetStep, unsigned int m3TargetStep);
+void Cap_MoveEffector(int m1TargetStep, int m2TargetStep, int m3TargetStep);
 
 /////////////////////////////////////////////////////////////////////////////
 // Hidden Helpers (local to implementation only)

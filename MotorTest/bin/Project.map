@@ -15,7 +15,10 @@ FILE SECTION
 mc9s12xdp512.c.o                        Model: SMALL,         Lang: ANSI-C
 main.c.o                                Model: SMALL,         Lang: ANSI-C
 Start12.c.o                             Model: SMALL,         Lang: ANSI-C
+rtshc12.c.o (ansixs.lib)                Model: SMALL,         Lang: ANSI-C
+pit.c.o                                 Model: SMALL,         Lang: ANSI-C
 pll.c.o                                 Model: SMALL,         Lang: ANSI-C
+segs.c.o                                Model: SMALL,         Lang: ANSI-C
 swled.c.o                               Model: SMALL,         Lang: ANSI-C
 Capstone.c.o                            Model: SMALL,         Lang: ANSI-C
 
@@ -26,8 +29,8 @@ Entry point: 0xC029 (_Startup)
 _startupData is allocated at 0xC031 and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
-  _Range   pZeroOut       0x2100     3
-  _Copy    *toCopyDownBeg 0xC0E0
+  _Range   pZeroOut       0x2100     10
+  _Copy    *toCopyDownBeg 0xC582
 } _startupData;
 
 *********************************************************************************************
@@ -36,8 +39,8 @@ Section Name                    Size  Type     From       To       Segment
 ---------------------------------------------------------------------------------------------
 .init                             49     R     0xC000     0xC030   ROM_C000
 .startData                        34     R     0xC031     0xC052   ROM_C000
-.text                            141     R     0xC053     0xC0DF   ROM_C000
-.copy                              2     R     0xC0E0     0xC0E1   ROM_C000
+.text                           1075     R     0xC053     0xC485   ROM_C000
+.copy                              2     R     0xC582     0xC583   ROM_C000
 .stack                           256   R/W     0x2000     0x20FF   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
@@ -687,12 +690,13 @@ Section Name                    Size  Type     From       To       Segment
 .abs_section_3ac                   2   N/I      0x3AC      0x3AD   .absSeg645
 .abs_section_3ae                   2   N/I      0x3AE      0x3AF   .absSeg646
 .abs_section_ff7a                  2     R     0xFF7A     0xFF7B   .absSeg647
-.bss                               3   R/W     0x2100     0x2102   RAM
+.bss                              10   R/W     0x2100     0x2109   RAM
+RUNTIME                          252     R     0xC486     0xC581   ROM_C000
 .vectSeg648_vect                   2     R     0xFFFE     0xFFFF   .vectSeg648
 
 Summary of section sizes per section type:
-READ_ONLY (R):          E6 (dec:      230)
-READ_WRITE (R/W):      103 (dec:      259)
+READ_ONLY (R):         588 (dec:     1416)
+READ_WRITE (R/W):      10A (dec:      266)
 NO_INIT (N/I):         300 (dec:      768)
 
 *********************************************************************************************
@@ -1224,18 +1228,18 @@ MODULE:                 -- mc9s12xdp512.c.o --
      _PWMSCLA                                   308       1       1       0   .abs_section_308
      _PWMSCLB                                   309       1       1       0   .abs_section_309
      _PWMSDN                                    324       1       1       0   .abs_section_324
-     _PITCFLMT                                  340       1       1       0   .abs_section_340
+     _PITCFLMT                                  340       1       1       1   .abs_section_340
      _PITFLT                                    341       1       1       0   .abs_section_341
-     _PITCE                                     342       1       1       0   .abs_section_342
-     _PITMUX                                    343       1       1       0   .abs_section_343
-     _PITINTE                                   344       1       1       0   .abs_section_344
-     _PITTF                                     345       1       1       1   .abs_section_345
-     _PITMTLD0                                  346       1       1       0   .abs_section_346
-     _PITMTLD1                                  347       1       1       0   .abs_section_347
+     _PITCE                                     342       1       1       2   .abs_section_342
+     _PITMUX                                    343       1       1       1   .abs_section_343
+     _PITINTE                                   344       1       1       4   .abs_section_344
+     _PITTF                                     345       1       1       5   .abs_section_345
+     _PITMTLD0                                  346       1       1       1   .abs_section_346
+     _PITMTLD1                                  347       1       1       1   .abs_section_347
      _XGCHID                                    382       1       1       0   .abs_section_382
      _XGCCR                                     39D       1       1       0   .abs_section_39d
-     _PORTAB                                      0       2       2       5   .abs_section_0
-     _DDRAB                                       2       2       2       1   .abs_section_2
+     _PORTAB                                      0       2       2      15   .abs_section_0
+     _DDRAB                                       2       2       2       3   .abs_section_2
      _PORTCD                                      4       2       2       0   .abs_section_4
      _DDRCD                                       6       2       2       0   .abs_section_6
      _PARTID                                     1A       2       2       0   .abs_section_1a
@@ -1297,7 +1301,7 @@ MODULE:                 -- mc9s12xdp512.c.o --
      _CAN2TXTSR                                 1FE       2       2       0   .abs_section_1fe
      _CAN3RXTSR                                 22E       2       2       0   .abs_section_22e
      _CAN3TXTSR                                 23E       2       2       0   .abs_section_23e
-     _PT01AD1                                   278       2       2       2   .abs_section_278
+     _PT01AD1                                   278       2       2       7   .abs_section_278
      _DDR01AD1                                  27A       2       2       1   .abs_section_27a
      _RDR01AD1                                  27C       2       2       0   .abs_section_27c
      _PER01AD1                                  27E       2       2       0   .abs_section_27e
@@ -1327,9 +1331,9 @@ MODULE:                 -- mc9s12xdp512.c.o --
      _PWMDTY23                                  31E       2       2       0   .abs_section_31e
      _PWMDTY45                                  320       2       2       0   .abs_section_320
      _PWMDTY67                                  322       2       2       0   .abs_section_322
-     _PITLD0                                    348       2       2       0   .abs_section_348
+     _PITLD0                                    348       2       2       1   .abs_section_348
      _PITCNT0                                   34A       2       2       0   .abs_section_34a
-     _PITLD1                                    34C       2       2       0   .abs_section_34c
+     _PITLD1                                    34C       2       2       1   .abs_section_34c
      _PITCNT1                                   34E       2       2       0   .abs_section_34e
      _PITLD2                                    350       2       2       0   .abs_section_350
      _PITCNT2                                   352       2       2       0   .abs_section_352
@@ -1357,11 +1361,11 @@ MODULE:                 -- mc9s12xdp512.c.o --
      _XGR7                                      3AE       2       2       0   .abs_section_3ae
 MODULE:                 -- main.c.o --
 - PROCEDURES:
-     main                                      C053      37      55       1   .text       
-     PIT0Int                                   C08A      12      18       1   .text       
+     main                                      C053      9A     154       1   .text       
+     PIT0Int                                   C0ED      12      18       1   .text       
 - VARIABLES:
      pitFlag                                   2100       1       1       1   .bss        
-     lockout                                   2101       2       2       2   .bss        
+     lockout                                   2101       2       2       4   .bss        
      _Vector_66                                FF7A       2       2       0   .abs_section_ff7a
 MODULE:                 -- Start12.c.o --
 - PROCEDURES:
@@ -1371,42 +1375,80 @@ MODULE:                 -- Start12.c.o --
      _startupData                              C031       6       6       3   .startData  
 - LABELS:
      __SEG_END_SSTACK                          2100       0       0       1               
+MODULE:                 -- rtshc12.c.o (ansixs.lib) --
+- PROCEDURES:
+     _LNEG                                     C486       9       9       2   RUNTIME     
+     _LINC                                     C48F       5       5       1   RUNTIME     
+     _LMUL                                     C494      27      39       1   RUNTIME     
+     _lDivMod                                  C4BB      B9     185       1   RUNTIME     
+     _LDIVU                                    C574       E      14       2   RUNTIME     
+- VARIABLES:
+MODULE:                 -- pit.c.o --
+- PROCEDURES:
+     PIT_Init                                  C0FF      7F     127       2   .text       
+     PIT_Sleep_us                              C17E      67     103       1   .text       
+     FindFactors                               C1E5     105     261       2   .text       
+- VARIABLES:
 MODULE:                 -- pll.c.o --
 - PROCEDURES:
-     PLL_To20MHz                               C09C      15      21       1   .text       
+     PLL_To20MHz                               C2EA      15      21       1   .text       
+- VARIABLES:
+MODULE:                 -- segs.c.o --
+- PROCEDURES:
+     Segs_Init                                 C2FF       D      13       1   .text       
+     Segs_Custom                               C30C      21      33       1   .text       
+     Segs_ClearAll                             C32D       C      12       1   .text       
+     Segs_Clear                                C339       7       7       1   .text       
 - VARIABLES:
 MODULE:                 -- swled.c.o --
 - PROCEDURES:
-     SWLInit                                   C0B1       D      13       1   .text       
-     SWLPressed                                C0BE       C      12       1   .text       
+     SWLInit                                   C340       D      13       1   .text       
+     SWLRead                                   C34D       8       8       1   .text       
+     SWLSet                                    C355       A      10       3   .text       
+     SWLClear                                  C35F       8       8       2   .text       
+     SWLPressed                                C367       C      12       2   .text       
+     SWLSwitchTransition                       C373      19      25       1   .text       
 - VARIABLES:
+     lastStates.1                              2103       1       1       2   .bss        
 MODULE:                 -- Capstone.c.o --
 - PROCEDURES:
-     Cap_PortAInit                             C0CA       8       8       1   .text       
-     Cap_PortASet                              C0D2       8       8       1   .text       
-     Cap_PortAClear                            C0DA       6       6       1   .text       
+     Cap_PortAInit                             C38C       8       8       1   .text       
+     Cap_PortARead                             C394       7       7       3   .text       
+     Cap_PortASet                              C39B       8       8       3   .text       
+     Cap_PortAClear                            C3A3       6       6       3   .text       
+     Cap_MoveEffector                          C3A9      AA     170       1   .text       
+     Cap_MotorStep                             C453      1C      28       1   .text       
+     Cap_SetMotorDirection                     C46F      17      23       3   .text       
 - VARIABLES:
+     m1CurrentStep.1                           2104       2       2       5   .bss        
+     m2CurrentStep.2                           2106       2       2       5   .bss        
+     m3CurrentStep.3                           2108       2       2       5   .bss        
 
 *********************************************************************************************
 MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
   mc9s12xdp512.c.o                           768      0      0
-  main.c.o                                     3     73      2
+  main.c.o                                     3    172      2
   Start12.c.o                                  0     49      0
+  rtshc12.c.o (ansixs.lib)                     0    252      0
+  pit.c.o                                      0    491      0
   pll.c.o                                      0     21      0
-  swled.c.o                                    0     25      0
-  Capstone.c.o                                 0     22      0
+  segs.c.o                                     0     65      0
+  swled.c.o                                    1     76      0
+  Capstone.c.o                                 6    250      0
   other                                      256     36      2
 
 *********************************************************************************************
 SECTION USE IN OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
 SECTION: ".text"
-  main PIT0Int PLL_To20MHz SWLInit SWLPressed Cap_PortAInit Cap_PortASet 
-  Cap_PortAClear 
+  main PIT0Int PIT_Init PIT_Sleep_us FindFactors PLL_To20MHz Segs_Init 
+  Segs_Custom Segs_ClearAll Segs_Clear SWLInit SWLRead SWLSet SWLClear 
+  SWLPressed SWLSwitchTransition Cap_PortAInit Cap_PortARead Cap_PortASet 
+  Cap_PortAClear Cap_MoveEffector Cap_MotorStep Cap_SetMotorDirection 
 SECTION: ".bss"
-  pitFlag lockout 
+  pitFlag lockout lastStates.1 m1CurrentStep.1 m2CurrentStep.2 m3CurrentStep.3 
 SECTION: ".init"
   Init _Startup 
 SECTION: ".abs_section_8"
@@ -2705,13 +2747,15 @@ SECTION: ".abs_section_3ae"
   _XGR7 
 SECTION: ".abs_section_ff7a"
   _Vector_66 
+SECTION: "RUNTIME"
+  _LNEG _LINC _LMUL _lDivMod _LDIVU 
 
 *********************************************************************************************
 OBJECT LIST SORTED BY ADDRESS
      Name                                      Addr   hSize   dSize     Ref    Section   RLIB
 ---------------------------------------------------------------------------------------------
-     _PORTAB                                      0       2       2       5   .abs_section_0
-     _DDRAB                                       2       2       2       1   .abs_section_2
+     _PORTAB                                      0       2       2      15   .abs_section_0
+     _DDRAB                                       2       2       2       3   .abs_section_2
      _PORTCD                                      4       2       2       0   .abs_section_4
      _DDRCD                                       6       2       2       0   .abs_section_6
      _PORTE                                       8       1       1       0   .abs_section_8
@@ -3214,7 +3258,7 @@ OBJECT LIST SORTED BY ADDRESS
      _DDR1AD0                                   273       1       1       0   .abs_section_273
      _RDR1AD0                                   275       1       1       0   .abs_section_275
      _PER1AD0                                   277       1       1       0   .abs_section_277
-     _PT01AD1                                   278       2       2       2   .abs_section_278
+     _PT01AD1                                   278       2       2       7   .abs_section_278
      _DDR01AD1                                  27A       2       2       1   .abs_section_27a
      _RDR01AD1                                  27C       2       2       0   .abs_section_27c
      _PER01AD1                                  27E       2       2       0   .abs_section_27e
@@ -3319,17 +3363,17 @@ OBJECT LIST SORTED BY ADDRESS
      _PWMDTY45                                  320       2       2       0   .abs_section_320
      _PWMDTY67                                  322       2       2       0   .abs_section_322
      _PWMSDN                                    324       1       1       0   .abs_section_324
-     _PITCFLMT                                  340       1       1       0   .abs_section_340
+     _PITCFLMT                                  340       1       1       1   .abs_section_340
      _PITFLT                                    341       1       1       0   .abs_section_341
-     _PITCE                                     342       1       1       0   .abs_section_342
-     _PITMUX                                    343       1       1       0   .abs_section_343
-     _PITINTE                                   344       1       1       0   .abs_section_344
-     _PITTF                                     345       1       1       1   .abs_section_345
-     _PITMTLD0                                  346       1       1       0   .abs_section_346
-     _PITMTLD1                                  347       1       1       0   .abs_section_347
-     _PITLD0                                    348       2       2       0   .abs_section_348
+     _PITCE                                     342       1       1       2   .abs_section_342
+     _PITMUX                                    343       1       1       1   .abs_section_343
+     _PITINTE                                   344       1       1       4   .abs_section_344
+     _PITTF                                     345       1       1       5   .abs_section_345
+     _PITMTLD0                                  346       1       1       1   .abs_section_346
+     _PITMTLD1                                  347       1       1       1   .abs_section_347
+     _PITLD0                                    348       2       2       1   .abs_section_348
      _PITCNT0                                   34A       2       2       0   .abs_section_34a
-     _PITLD1                                    34C       2       2       0   .abs_section_34c
+     _PITLD1                                    34C       2       2       1   .abs_section_34c
      _PITCNT1                                   34E       2       2       0   .abs_section_34e
      _PITLD2                                    350       2       2       0   .abs_section_350
      _PITCNT2                                   352       2       2       0   .abs_section_352
@@ -3358,27 +3402,64 @@ OBJECT LIST SORTED BY ADDRESS
      _XGR6                                      3AC       2       2       0   .abs_section_3ac
      _XGR7                                      3AE       2       2       0   .abs_section_3ae
      pitFlag                                   2100       1       1       1   .bss        
-     lockout                                   2101       2       2       2   .bss        
+     lockout                                   2101       2       2       4   .bss        
+     lastStates.1                              2103       1       1       2   .bss        
+     m1CurrentStep.1                           2104       2       2       5   .bss        
+     m2CurrentStep.2                           2106       2       2       5   .bss        
+     m3CurrentStep.3                           2108       2       2       5   .bss        
      Init                                      C000      29      41       1   .init       
      _Startup                                  C029       8       8       0   .init       
-     main                                      C053      37      55       1   .text       
-     PIT0Int                                   C08A      12      18       1   .text       
-     PLL_To20MHz                               C09C      15      21       1   .text       
-     SWLInit                                   C0B1       D      13       1   .text       
-     SWLPressed                                C0BE       C      12       1   .text       
-     Cap_PortAInit                             C0CA       8       8       1   .text       
-     Cap_PortASet                              C0D2       8       8       1   .text       
-     Cap_PortAClear                            C0DA       6       6       1   .text       
+     main                                      C053      9A     154       1   .text       
+     PIT0Int                                   C0ED      12      18       1   .text       
+     PIT_Init                                  C0FF      7F     127       2   .text       
+     PIT_Sleep_us                              C17E      67     103       1   .text       
+     FindFactors                               C1E5     105     261       2   .text       
+     PLL_To20MHz                               C2EA      15      21       1   .text       
+     Segs_Init                                 C2FF       D      13       1   .text       
+     Segs_Custom                               C30C      21      33       1   .text       
+     Segs_ClearAll                             C32D       C      12       1   .text       
+     Segs_Clear                                C339       7       7       1   .text       
+     SWLInit                                   C340       D      13       1   .text       
+     SWLRead                                   C34D       8       8       1   .text       
+     SWLSet                                    C355       A      10       3   .text       
+     SWLClear                                  C35F       8       8       2   .text       
+     SWLPressed                                C367       C      12       2   .text       
+     SWLSwitchTransition                       C373      19      25       1   .text       
+     Cap_PortAInit                             C38C       8       8       1   .text       
+     Cap_PortARead                             C394       7       7       3   .text       
+     Cap_PortASet                              C39B       8       8       3   .text       
+     Cap_PortAClear                            C3A3       6       6       3   .text       
+     Cap_MoveEffector                          C3A9      AA     170       1   .text       
+     Cap_MotorStep                             C453      1C      28       1   .text       
+     Cap_SetMotorDirection                     C46F      17      23       3   .text       
+     _LNEG                                     C486       9       9       2   RUNTIME     
+     _LINC                                     C48F       5       5       1   RUNTIME     
+     _LMUL                                     C494      27      39       1   RUNTIME     
+     _lDivMod                                  C4BB      B9     185       1   RUNTIME     
+     _LDIVU                                    C574       E      14       2   RUNTIME     
      _Vector_66                                FF7A       2       2       0   .abs_section_ff7a
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
 ---------------------------------------------------------------------------------------------
 NOT USED PROCEDURES
+rtshc12.c.o (ansixs.lib):
+  _BSHL _BSHRS _BSHRU _BDIVMODU _BDIVMODS _ISHL _ISHRU _ISHRS _LSHL _LSHRU 
+  _LSHRS _LADD _LSUB _LAND _LOR _LXOR _LCMP _LCMP_P _LCMP_PP _LCOM _LDEC 
+  _LMULU16x32 _LMULS16x32 _NEG_P _LDIVS _LMODU _LMODS _ILSEXT _COPY 
+  _CASE_DIRECT _CASE_DIRECT_BYTE _CASE_CHECKED _CASE_CHECKED_BYTE _CASE_SEARCH 
+  _CASE_SEARCH_BYTE _CASE_SEARCH_8 _CASE_SEARCH_8_BYTE _FCALL _FPCMP _PADD 
+  _PSUB _PINC _PDEC 
+pit.c.o:
+  PIT_Sleep_ms 
+segs.c.o:
+  Segs_Normal Segs_CodeB Segs_16H Segs_16D Segs_8H Segs_ClearLine Segs_SayErr 
+  Segs_SayHelp 
 swled.c.o:
-  SWLRead SWLSet SWLClear SWLToggle SWLSwitchTransition 
+  SWLToggle 
 Capstone.c.o:
-  Cap_PortARead Cap_PortAToggle 
+  Cap_PortAToggle Cap_InitInvKinGlobals Cap_CalcAngleXYZ Cap_CalcInvKin 
+  Cap_AngleToStep 
 NOT USED VARIABLES
 main.c.o:
   ESC_SaveCursor ESC_UnsaveCursor ESC_ResetAttributes ESC_GoBright ESC_GoDim 
@@ -3386,15 +3467,17 @@ main.c.o:
   ESC_ForeBlack ESC_ForeRed ESC_ForeGreen ESC_ForeYellow ESC_ForeBlue 
   ESC_ForeMagenta ESC_ForeCyan ESC_ForeWhite ESC_BackBlack ESC_BackRed 
   ESC_BackGreen ESC_BackYellow ESC_BackBlue ESC_BackMagenta ESC_BackCyan 
-  ESC_BackWhite M1MaxSteps M2MaxSteps M3MaxSteps M1MinSteps M2MinSteps 
-  M3MinSteps 
-swled.c.o:
-  lastStates.1 
+  ESC_BackWhite 
+rtshc12.c.o (ansixs.lib):
+  _PowOfTwo_8 _PowOfTwo_16 _PowOfTwo_32 errno 
+Capstone.c.o:
+  EffectorRadius BaseRadius ForearmLength BicepLength BaseToFloor StepsPerRev 
+  sqrt3 pi sin120 cos120 tan60 sin30 tan30 
 
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0xC0E0 ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xC582 ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
@@ -3403,15 +3486,35 @@ OBJECT-DEPENDENCIES SECTION
 ---------------------------------------------------------------------------------------------
 Init                      USES _startupData 
 _Startup                  USES __SEG_END_SSTACK Init main 
-main                      USES PLL_To20MHz SWLInit Cap_PortAInit SWLPressed 
-                                Cap_PortASet Cap_PortAClear 
+main                      USES PLL_To20MHz SWLInit Segs_Init PIT_Init 
+                                Cap_PortAInit lockout SWLSwitchTransition SWLSet SWLPressed 
+                                SWLClear Cap_MoveEffector 
 PIT0Int                   USES _PITTF pitFlag lockout 
+PIT_Init                  USES FindFactors _PITMTLD0 _PITLD0 _PITINTE _PITCE 
+                                _PITMUX _PITMTLD1 _PITLD1 _PITCFLMT _PITTF 
+PIT_Sleep_us              USES PIT_Init _PITTF _LINC 
+FindFactors               USES _LDIVU _LMUL FindFactors _LNEG 
 PLL_To20MHz               USES _SYNR _REFDV _CLKSEL _PLLCTL _CRGFLG 
+Segs_Init                 USES _PORTAB _DDRAB Segs_ClearAll 
+Segs_Custom               USES _PORTAB 
+Segs_ClearAll             USES Segs_Clear 
+Segs_Clear                USES Segs_Custom 
 SWLInit                   USES _PT01AD1 _DDR01AD1 _ATD1DIEN 
+SWLRead                   USES _PT01AD1 
+SWLSet                    USES _PT01AD1 
+SWLClear                  USES _PT01AD1 
 SWLPressed                USES _PT01AD1 
+SWLSwitchTransition       USES SWLRead lastStates.1 
 Cap_PortAInit             USES _PORTAB _DDRAB 
+Cap_PortARead             USES _PORTAB 
 Cap_PortASet              USES _PORTAB 
 Cap_PortAClear            USES _PORTAB 
+Cap_MoveEffector          USES m1CurrentStep.1 Cap_SetMotorDirection 
+                                m2CurrentStep.2 m3CurrentStep.3 Cap_PortAClear Cap_PortARead 
+                                Cap_MotorStep Cap_PortASet 
+Cap_MotorStep             USES Cap_PortASet PIT_Sleep_us Cap_PortAClear 
+Cap_SetMotorDirection     USES Cap_PortAClear Cap_PortASet 
+_LDIVU                    USES _lDivMod 
 _Vector_66                USES PIT0Int 
 
 *********************************************************************************************
@@ -3425,14 +3528,64 @@ DEPENDENCY TREE
  |  |    
  |  +- SWLInit             
  |  |    
+ |  +- Segs_Init           
+ |  |  | 
+ |  |  +- Segs_ClearAll       
+ |  |     | 
+ |  |     +- Segs_Clear          
+ |  |        | 
+ |  |        +- Segs_Custom         
+ |  |             
+ |  +- PIT_Init            
+ |  |  | 
+ |  |  +- FindFactors         
+ |  |     | 
+ |  |     +- _LDIVU              
+ |  |     |  | 
+ |  |     |  +- _lDivMod            
+ |  |     |       
+ |  |     +- _LMUL               
+ |  |     |    
+ |  |     +- _LNEG               
+ |  |          
  |  +- Cap_PortAInit       
+ |  |    
+ |  +- SWLSwitchTransition 
+ |  |  | 
+ |  |  +- SWLRead             
+ |  |       
+ |  +- SWLSet              
  |  |    
  |  +- SWLPressed          
  |  |    
- |  +- Cap_PortASet        
+ |  +- SWLClear            
  |  |    
- |  +- Cap_PortAClear      
- |       
+ |  +- Cap_MoveEffector    
+ |     | 
+ |     +- Cap_SetMotorDirection
+ |     |  | 
+ |     |  +- Cap_PortAClear      
+ |     |  |    
+ |     |  +- Cap_PortASet        
+ |     |       
+ |     +- Cap_PortAClear       (see above)
+ |     |  
+ |     +- Cap_PortARead       
+ |     |    
+ |     +- Cap_MotorStep       
+ |     |  | 
+ |     |  +- Cap_PortASet         (see above)
+ |     |  |  
+ |     |  +- PIT_Sleep_us        
+ |     |  |  | 
+ |     |  |  +- PIT_Init             (see above)
+ |     |  |  |  
+ |     |  |  +- _LINC               
+ |     |  |       
+ |     |  +- Cap_PortAClear       (see above)
+ |     |     
+ |     +- Cap_PortASet         (see above)
+ |        
  +- _Startup            
     | 
     +- Init                
@@ -3450,5 +3603,5 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 6
-Total size of all blocks to be downloaded: 230
+Total size of all blocks to be downloaded: 1416
 
