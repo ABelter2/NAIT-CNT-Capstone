@@ -59,7 +59,7 @@ const unsigned int StepsPerRev = 3200;
 void Cap_PortAInit(void)
 {
     // clear all bits except enable and set data direction to all outputs
-    PORTA &= MotorDisable;
+    PORTA = MotorDisable;
     DDRA = 0xFF;
 }
 
