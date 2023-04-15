@@ -34,10 +34,12 @@ if __name__ == "__main__":
                 # print("Processing...")  # debug line
 
                 img_pixels = cd.convert_and_scan(img)
-                categories = cd.categorize_pixels(img_pixels)
-                colour = cd.analyse_categories(categories)
 
-                # print the colour name in the console for debugging
+                categories = cd.categorize_pixels(img_pixels)
+                print("Results:")
+                print(categories)
+
+                colour = cd.analyse_categories(categories)
                 print(f"The chip is {colour}")
 
                 # send a byte back through serial to indicate to the other device what colour the chip is

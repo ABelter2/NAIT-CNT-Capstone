@@ -173,12 +173,12 @@ def categorize_pixels(pixels):
             colour_cat[range_key] = 0
 
     for px in pixels:
-        # extract the HSV values to determine if the pixel is dull or colourful
+        # sat to determine colourful/dull, hue to determine colourful category, value to determine dull category
         hue, sat, val = px
 
-        # highly saturated pixels are colourful and can later be categorized by hue
-        # lowly saturated pixels are dull and can be later categorized by value
-        if sat > 120:
+        # may need to bias saturation check for distinguishing colour/dull based on lighting
+        if sat > 255//2:
+            # highly saturated pixels are colourful and can later be categorized by hue
             for range_key, range_val in colour_ranges.items():
                 low, high = range_val
                 if low <= hue <= high:
@@ -189,19 +189,13 @@ def categorize_pixels(pixels):
                         colour_cat[range_key] += 1
                     continue  # stop processing the pixel when its range is found
         else:
+            # lowly saturated pixels are dull and can be later categorized by value
             # may need to toward black depending on room lighting
             # glare and reflections may bias the pixel value, so a bias in this step can counteract the lighting bias
             if val > 255//2:
                 colour_cat["white"] += 1
             else:
                 colour_cat["black"] += 1
-
-
-    # manually init white and black
-
-    # debugging lines
-    # print(f"Num colourful px: {len(pixel_values['Colourful'])}")
-    # print(f"Num dull px: {len(pixel_values['Dull'])}")
 
     # find what range the colourful pixels fall into and add it to cat_pixels
     for px_hue in pixel_values["colourful"]:
@@ -222,29 +216,10 @@ def categorize_pixels(pixels):
             colour_cat["white"] += 1
         else:
             colour_cat["black"] += 1
-    # print(f"categorize_pixel cat_pixels: {cat_pixels}")  # debug line
-    #return colour_cat, len(pixel_values["colourful"]), dull_cat, len(pixel_values["dull"])
     return colour_cat
 
 
 def analyse_categories(categorized_results):
-    #colour_cat, colour_num, dull_cat, dull_num = categorized_results
-
-    '''
-    print("Colourful category:")
-    print(colour_cat)
-
-    print("Dull category:")
-    print(dull_cat)
-    '''
-    print("Results:")
-    print(categorized_results)
-    # bias towards colourful pixels because of the bias resulting from the glare and reflections of bright lighting.
-    '''if colour_num * 1.2 > dull_num:
-        target = colour_cat
-    else:
-        target = dull_cat
-'''
     max_count = max(categorized_results.values())
     for colour, count in categorized_results.items():
         if count == max_count:

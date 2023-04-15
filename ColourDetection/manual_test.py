@@ -8,8 +8,14 @@ import colour_detection as cd
 
 while True:
     cam = cd.get_cam(1)
+
     img = cd.manual_get_img(cam)
+
     img_pixels = cd.convert_and_scan(img)
+
     categories = cd.categorize_pixels(img_pixels)
+    print("Results:")
+    print(categories)
+
     colour = cd.analyse_categories(categories)
     print(f"The chip is {colour}")
