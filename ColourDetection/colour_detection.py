@@ -8,7 +8,6 @@ import time
 
 import cv2
 import math
-import numpy as np
 
 # manually define the hue colour ranges as a dictionary
 # keyed by colour name, valued by low/high range tuple
@@ -54,8 +53,7 @@ def get_cam(cam_num=0):
     :return: VideoCapture camera
     """
     # get the camera, reduce the buffer size to 1
-    cam = cv2.VideoCapture(cam_num, cv2.CAP_DSHOW)
-    return cam
+    return cv2.VideoCapture(cam_num, cv2.CAP_DSHOW)
 
 
 def manual_get_img(cam) -> 'image':
@@ -121,30 +119,24 @@ def get_img(cam):
     return img  # return the image for processing
 
 
-def analyse_pixels(img):
+def convert_and_scan(img):
     """
-    Analyses the pixels in a ring pattern around the center of the image.
-    Pixels will be analysed using the HSV (hue, saturation, value) format.
-    Pixels with a saturation above a set value are considered colourful, below the value are dull.
-    Populates a return dictionary with the hue values of colourful pixels and value values of dull pixels.
-    :param img: image to be analysed
-    :return: dictionary containing lists of dull and colourful pixel values
+    Converts the passed image from BGR to HSV colour space.
+    After being converted, the HSV pixel values are scanned according a ring scanning pattern.
+    :param img: The image to convert to HSV and scan.
+    :return: The pixels to categorize and analyse.
     """
-    # create the dictionary for the pixel values, keyed by colourful or dull
-    pixel_values = {"Colourful": [], "Dull": []}
-
     # convert the image from BGR format to HSV format
     img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
-    # get the image dimensions (height and width)
-    dim = img.shape  # returns: height, width, num channels
-    height = dim[0]
-    width = dim[1]
+    # get the image dimensions
+    height, width, channels = img_hsv.shape  # returns: (height, width, num channels)
 
     # analyse the image in a ring pattern
     # hypotenuse will range from 180px to 230px - determined from manual analysis of image capture to find hyp range
     # the pixels will be analysed in a full 360 degree ring
     # the pixel will be hyp distance from the center of the image
+    pixels = []
     for hyp in range(170, 230):
         for angle_deg in range(360):
             angle_rad = angle_deg * math.pi / 180  # convert angle to radians
@@ -156,85 +148,104 @@ def analyse_pixels(img):
             pos_x, pos_y = int(width / 2 + off_x), int(height / 2 + off_y)
 
             # get the HSV value of the target pixel - returns (hue, saturation, value)
-            px = img_hsv[pos_y, pos_x]  # openCv uses coordinate indexes as [y,x], not (x,y)
+            pixels.append(img_hsv[pos_y, pos_x])  # openCv uses coordinate indexes as [y,x], not (x,y)
+    return pixels
 
-            # check the saturation value to see if px is colourful or dull
-            # saturation range: 0-255
-            # colourful threshold is at 100 to account for poor lighting affecting the saturation
-            if px[1] > 120:
-                pixel_values["Colourful"].append(px[0])  # append the pixel's hue to the colourful pixels
+
+def categorize_pixels(pixels):
+    """
+    Categorizes the supplied pixels into colourful and dull.
+    Then, the colourful pixels are categorized by colour using the hue and defined colour ranges
+    and the dull pixels are categorized using a biased analysis of the value component.
+    :param pixels: The HSV pixels to categorize.
+    :return: Tuple containing the categorized pixels, the number of colourful pixels, and the number of dull pixels
+    """
+    # create the dictionary for the pixel values, keyed by colourful or dull
+    pixel_values = {"colourful": [], "dull": []}
+
+    # to store the results of categorizing the pixels
+    colour_cat = {"white": 0, "black": 0}
+    for range_key in colour_ranges:
+        # concat low and high red ranges into just red
+        if "red" in range_key:
+            colour_cat["red"] = 0
+        else:
+            colour_cat[range_key] = 0
+
+    for px in pixels:
+        # extract the HSV values to determine if the pixel is dull or colourful
+        hue, sat, val = px
+
+        # highly saturated pixels are colourful and can later be categorized by hue
+        # lowly saturated pixels are dull and can be later categorized by value
+        if sat > 120:
+            for range_key, range_val in colour_ranges.items():
+                low, high = range_val
+                if low <= hue <= high:
+                    # concat low and high red ranges into just red
+                    if "red" in range_key:
+                        colour_cat["red"] += 1
+                    else:
+                        colour_cat[range_key] += 1
+                    continue  # stop processing the pixel when its range is found
+        else:
+            # may need to toward black depending on room lighting
+            # glare and reflections may bias the pixel value, so a bias in this step can counteract the lighting bias
+            if val > 255//2:
+                colour_cat["white"] += 1
             else:
-                pixel_values["Dull"].append(px[2])  # append the pixel's value to the colourful pixels
-    # print(f"analyse_pixel pixel_values: {pixel_values}")
-    return pixel_values
+                colour_cat["black"] += 1
 
 
-def categorize_pixels(pixel_values):
-    """
-    Categorizes the majority type (colourful or dull) of pixels to use to determine the majority colour.
-    Categorizes the pixels by colour based on colour range for colourful pixels and value range for dull pixels.
-    :param pixel_values: dictionary of colourful and dull pixels hues and values (respectively)
-    :return: A categorized dictionary of pixel values - categorizes pixels by colour.
-        Keyed by colour, valued by count of that colour
-    """
-    cat_pixels = {}  # to store the results of categorizing the pixels
+    # manually init white and black
 
     # debugging lines
     # print(f"Num colourful px: {len(pixel_values['Colourful'])}")
     # print(f"Num dull px: {len(pixel_values['Dull'])}")
 
-    # determine which to categorize between colourful and dull pixels based on the amount of each
-    # bias towards colourful pixels due to lighting influencing the values
-    if len(pixel_values["Colourful"]) * 1.5 > len(pixel_values["Dull"]):
-        # for each colourful pixel, check each colour range until the range that contains the pixel value
-        # is found, then add the pixel to the categorized pixels with the colour name as the key
-        # if the key (colour name) is in the dict, increase the count value - otherwise init to 1
-        for px_hue in pixel_values["Colourful"]:
-            for colour_range in colour_ranges:
-                low = colour_ranges[colour_range][0]
-                high = colour_ranges[colour_range][1]
-                if low <= px_hue <= high:
-                    # store low and high red as just red in the categorized pixels dict
-                    # store all other colours based off their colour range key
-                    if "red" in colour_range:
-                        if "red" in cat_pixels:
-                            cat_pixels["red"] += 1
-                        else:
-                            cat_pixels["red"] = 1
-                    else:
-                        if colour_range in cat_pixels:
-                            cat_pixels[colour_range] += 1
-                        else:
-                            cat_pixels[colour_range] = 1
-                    continue  # stop processing the pixel when its range is found
+    # find what range the colourful pixels fall into and add it to cat_pixels
+    for px_hue in pixel_values["colourful"]:
+        for range_key, range_val in colour_ranges.items():
+            low, high = range_val
+            if low <= px_hue <= high:
+                # concat low and high red ranges into just red
+                if "red" in range_key:
+                    colour_cat["red"] += 1
+                else:
+                    colour_cat[range_key] += 1
+                continue  # stop processing the pixel when its range is found
+
+    for px_val in pixel_values["dull"]:
+        # may need to toward black depending on room lighting because glare and reflections may bias the pixel value,
+        # so a bias in this step can reverse the bias due to lighting
+        if px_val > 255//2:
+            colour_cat["white"] += 1
+        else:
+            colour_cat["black"] += 1
+    # print(f"categorize_pixel cat_pixels: {cat_pixels}")  # debug line
+    #return colour_cat, len(pixel_values["colourful"]), dull_cat, len(pixel_values["dull"])
+    return colour_cat
+
+
+def analyse_categories(categorized_results):
+    #colour_cat, colour_num, dull_cat, dull_num = categorized_results
+
+    '''
+    print("Colourful category:")
+    print(colour_cat)
+
+    print("Dull category:")
+    print(dull_cat)
+    '''
+    print("Results:")
+    print(categorized_results)
+    # bias towards colourful pixels because of the bias resulting from the glare and reflections of bright lighting.
+    '''if colour_num * 1.2 > dull_num:
+        target = colour_cat
     else:
-        for px_val in pixel_values["Dull"]:
-            # if the pixel value is greater than 255/2 (half of the value range),
-            # the pixel is white - if it is less, the pixel is black
-            # if the key (colour name) is in the dict, increase the count value - otherwise init to 1
-            if px_val > 150:
-                # print(f"white : {px_val}")
-                if "white" in cat_pixels:
-                    cat_pixels["white"] += 1
-                else:
-                    cat_pixels["white"] = 1
-            else:
-                # print(f"black : {px_val}")
-                if "black" in cat_pixels:
-                    cat_pixels["black"] += 1
-                else:
-                    cat_pixels["black"] = 1
-    print(f"categorize_pixel cat_pixels: {cat_pixels}")
-    return cat_pixels
-
-
-def determine_colour(categorized_pixels):
-    """
-    Determines the colour name of the majority colour in the categorized pixels dictionary
-    :param categorized_pixels: a dictionary containing pixels categorized by colour
-    :return: the majority colour name contained within the passed dictionary
-    """
-    max_count = max(categorized_pixels.values())
-    for colour in categorized_pixels:
-        if categorized_pixels[colour] == max_count:
+        target = dull_cat
+'''
+    max_count = max(categorized_results.values())
+    for colour, count in categorized_results.items():
+        if count == max_count:
             return colour

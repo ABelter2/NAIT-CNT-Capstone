@@ -108,7 +108,7 @@ void main(void)
   Segs_Init();
   PIT_Init(PIT_Channel_0, PIT_Interrupt_On, GlobalBusRate, 10000); // PIT0 @ 10ms intervals, interrupts on
   SCI0_Init(GlobalBusRate, BaudRate_9600, SCI_RDRF_InterruptOff);  // SCI0 @ 9600 baud
-  Pulse_Init_16Bit(Pulse_Channel7, Pulse_PrescaleStage1_1, 20, Pulse_PolatityPositive, 10000, 0);
+  Pulse_Init_16Bit(Pulse_Channel5, Pulse_PrescaleStage1_1, 20, Pulse_PolatityPositive, 10000, MaxServoDuty);
 
   UpdateTestDisplay(currentTest);
   SWLSet(SWLGreen);
@@ -258,12 +258,12 @@ void PerformTest(SelectedTest currentTest, SortingTestColour currentSortingColou
 // performs the chip isolator test
 void ChipIsolatorTest()
 {
-  // move slot fully forward (servo to max) and sleep
-  Pulse_SetDuty_16Bit(Pulse_Channel7, MinServoDuty);
+  // move slot fully out (servo to min) and sleep
+  Pulse_SetDuty_16Bit(Pulse_Channel5, MinServoDuty);
   PIT_Sleep_ms(PIT_Channel_1, GlobalBusRate, 500);
 
-  // move slot fully out (servo to min) and sleep
-  Pulse_SetDuty_16Bit(Pulse_Channel7, MaxServoDuty);
+  // move slot fully forward (servo to max) and sleep
+  Pulse_SetDuty_16Bit(Pulse_Channel5, MaxServoDuty);
   PIT_Sleep_ms(PIT_Channel_1, GlobalBusRate, 500);
 }
 

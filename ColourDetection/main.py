@@ -33,14 +33,9 @@ if __name__ == "__main__":
             if ser_in.decode() == 'a':
                 # print("Processing...")  # debug line
 
-                # get the HSV pixel values from the image
-                pixel_values = cd.analyse_pixels(img)
-
-                # categorize the pixels into colourful or dull
-                cat_pixels = cd.categorize_pixels(pixel_values)
-
-                # determine what colour the chip is based on the categorized dictionary
-                colour = cd.determine_colour(cat_pixels)
+                img_pixels = cd.convert_and_scan(img)
+                categories = cd.categorize_pixels(img_pixels)
+                colour = cd.analyse_categories(categories)
 
                 # print the colour name in the console for debugging
                 print(f"The chip is {colour}")

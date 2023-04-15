@@ -1,5 +1,5 @@
 *** EVALUATION ***
-PROGRAM "C:\Users\andre\Desktop\CMPE2965\PokerChipSorter_Testing\bin\Project.abs"
+PROGRAM "C:\Users\andre\Desktop\Capstone Repo\Capstone\PokerChipSorter_Testing\bin\Project.abs"
 
 *********************************************************************************************
 TARGET SECTION
@@ -23,6 +23,7 @@ sci.c.o                                 Model: SMALL,         Lang: ANSI-C
 segs.c.o                                Model: SMALL,         Lang: ANSI-C
 swled.c.o                               Model: SMALL,         Lang: ANSI-C
 timer.c.o                               Model: SMALL,         Lang: ANSI-C
+pulse.c.o                               Model: SMALL,         Lang: ANSI-C
 
 *********************************************************************************************
 STARTUP SECTION
@@ -32,7 +33,7 @@ _startupData is allocated at 0xC031 and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
   _Range   pZeroOut       0x2100     7
-  _Copy    *toCopyDownBeg 0xCCC1
+  _Copy    *toCopyDownBeg 0xCF74
 } _startupData;
 
 *********************************************************************************************
@@ -42,8 +43,8 @@ Section Name                    Size  Type     From       To       Segment
 .init                             49     R     0xC000     0xC030   ROM_C000
 .startData                        34     R     0xC031     0xC052   ROM_C000
 .rodata1                         630     R     0xC053     0xC2C8   ROM_C000
-.text                           2223     R     0xC2C9     0xCB77   ROM_C000
-.copy                              2     R     0xCCC1     0xCCC2   ROM_C000
+.text                           2914     R     0xC2C9     0xCE2A   ROM_C000
+.copy                              2     R     0xCF74     0xCF75   ROM_C000
 .stack                           256   R/W     0x2000     0x20FF   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
@@ -694,12 +695,12 @@ Section Name                    Size  Type     From       To       Segment
 .abs_section_3ae                   2   N/I      0x3AE      0x3AF   .absSeg646
 .abs_section_ff7a                  2     R     0xFF7A     0xFF7B   .absSeg647
 .bss                               3   R/W     0x2100     0x2102   RAM
-RUNTIME                          329     R     0xCB78     0xCCC0   ROM_C000
+RUNTIME                          329     R     0xCE2B     0xCF73   ROM_C000
 .common                            4   R/W     0x2103     0x2106   RAM
 .vectSeg648_vect                   2     R     0xFFFE     0xFFFF   .vectSeg648
 
 Summary of section sizes per section type:
-READ_ONLY (R):         CC7 (dec:     3271)
+READ_ONLY (R):         F7A (dec:     3962)
 READ_WRITE (R/W):      107 (dec:      263)
 NO_INIT (N/I):         300 (dec:      768)
 
@@ -1223,21 +1224,21 @@ MODULE:                 -- mc9s12xdp512.c.o --
      _VREGCTRL                                  2F1       1       1       0   .abs_section_2f1
      _VREGAPICL                                 2F2       1       1       0   .abs_section_2f2
      _VREGAPITR                                 2F3       1       1       0   .abs_section_2f3
-     _PWME                                      300       1       1       0   .abs_section_300
-     _PWMPOL                                    301       1       1       0   .abs_section_301
-     _PWMCLK                                    302       1       1       0   .abs_section_302
-     _PWMPRCLK                                  303       1       1       0   .abs_section_303
+     _PWME                                      300       1       1       3   .abs_section_300
+     _PWMPOL                                    301       1       1       3   .abs_section_301
+     _PWMCLK                                    302       1       1      16   .abs_section_302
+     _PWMPRCLK                                  303       1       1       6   .abs_section_303
      _PWMCAE                                    304       1       1       0   .abs_section_304
-     _PWMCTL                                    305       1       1       0   .abs_section_305
-     _PWMSCLA                                   308       1       1       0   .abs_section_308
-     _PWMSCLB                                   309       1       1       0   .abs_section_309
+     _PWMCTL                                    305       1       1       4   .abs_section_305
+     _PWMSCLA                                   308       1       1       1   .abs_section_308
+     _PWMSCLB                                   309       1       1       1   .abs_section_309
      _PWMSDN                                    324       1       1       0   .abs_section_324
      _PITCFLMT                                  340       1       1       1   .abs_section_340
      _PITFLT                                    341       1       1       0   .abs_section_341
      _PITCE                                     342       1       1       2   .abs_section_342
      _PITMUX                                    343       1       1       1   .abs_section_343
      _PITINTE                                   344       1       1       4   .abs_section_344
-     _PITTF                                     345       1       1       2   .abs_section_345
+     _PITTF                                     345       1       1       5   .abs_section_345
      _PITMTLD0                                  346       1       1       1   .abs_section_346
      _PITMTLD1                                  347       1       1       1   .abs_section_347
      _XGCHID                                    382       1       1       0   .abs_section_382
@@ -1327,14 +1328,14 @@ MODULE:                 -- mc9s12xdp512.c.o --
      _PWMCNT23                                  30E       2       2       0   .abs_section_30e
      _PWMCNT45                                  310       2       2       0   .abs_section_310
      _PWMCNT67                                  312       2       2       0   .abs_section_312
-     _PWMPER01                                  314       2       2       0   .abs_section_314
-     _PWMPER23                                  316       2       2       0   .abs_section_316
-     _PWMPER45                                  318       2       2       0   .abs_section_318
-     _PWMPER67                                  31A       2       2       0   .abs_section_31a
-     _PWMDTY01                                  31C       2       2       0   .abs_section_31c
-     _PWMDTY23                                  31E       2       2       0   .abs_section_31e
-     _PWMDTY45                                  320       2       2       0   .abs_section_320
-     _PWMDTY67                                  322       2       2       0   .abs_section_322
+     _PWMPER01                                  314       2       2       1   .abs_section_314
+     _PWMPER23                                  316       2       2       1   .abs_section_316
+     _PWMPER45                                  318       2       2       1   .abs_section_318
+     _PWMPER67                                  31A       2       2       1   .abs_section_31a
+     _PWMDTY01                                  31C       2       2       1   .abs_section_31c
+     _PWMDTY23                                  31E       2       2       1   .abs_section_31e
+     _PWMDTY45                                  320       2       2       1   .abs_section_320
+     _PWMDTY67                                  322       2       2       1   .abs_section_322
      _PITLD0                                    348       2       2       1   .abs_section_348
      _PITCNT0                                   34A       2       2       0   .abs_section_34a
      _PITLD1                                    34C       2       2       1   .abs_section_34c
@@ -1365,15 +1366,15 @@ MODULE:                 -- mc9s12xdp512.c.o --
      _XGR7                                      3AE       2       2       0   .abs_section_3ae
 MODULE:                 -- main.c.o --
 - PROCEDURES:
-     main                                      C2C9      FA     250       2   .text       
-     UpdateTestDisplay                         C3C3      B9     185       2   .text       
-     UpdateSortingColour                       C47C      56      86       1   .text       
-     PerformTest                               C4D2      1F      31       1   .text       
-     ChipIsolatorTest                          C4F1       1       1       1   .text       
-     ColourIdentificationTest                  C4F2       C      12       1   .text       
-     DisplayIdentifiedColour                   C4FE      5B      91       1   .text       
-     ChipSortingTest                           C559       1       1       1   .text       
-     PIT0Int                                   C55A       F      15       1   .text       
+     main                                      C2C9     114     276       2   .text       
+     UpdateTestDisplay                         C3DD      B9     185       2   .text       
+     UpdateSortingColour                       C496      56      86       1   .text       
+     PerformTest                               C4EC      1F      31       1   .text       
+     ChipIsolatorTest                          C50B      3E      62       1   .text       
+     ColourIdentificationTest                  C549      15      21       1   .text       
+     UpdateColour                              C55E      5B      91       1   .text       
+     ChipSortingTest                           C5B9       1       1       1   .text       
+     PIT0Int                                   C5BA       F      15       1   .text       
 - VARIABLES:
      STRING...Sorter.Test.Mode...1             C053      15      21       1   .rodata1    
      STRING.Left.Right.Swap.Test.2             C068      15      21       1   .rodata1    
@@ -1417,83 +1418,95 @@ MODULE:                 -- Start12.c.o --
      __SEG_END_SSTACK                          2100       0       0       1               
 MODULE:                 -- rtshc12.c.o (ansixs.lib) --
 - PROCEDURES:
-     _ISHL                                     CB78       B      11       1   RUNTIME     
-     _LNEG                                     CB83       9       9       2   RUNTIME     
-     _LINC                                     CB8C       5       5       1   RUNTIME     
-     _LMUL                                     CB91      27      39       1   RUNTIME     
-     _LMULU16x32                               CBB8       F      15       2   RUNTIME     
-     _lDivMod                                  CBC7      B9     185       1   RUNTIME     
-     _LDIVU                                    CC80       E      14      13   RUNTIME     
-     _CASE_DIRECT_BYTE                         CC8E       5       5       1   RUNTIME     
-     _CASE_CHECKED_BYTE                        CC93      14      20       5   RUNTIME     
-     _CASE_SEARCH_8_BYTE                       CCA7      1A      26       2   RUNTIME     
+     _ISHL                                     CE2B       B      11       1   RUNTIME     
+     _LNEG                                     CE36       9       9       2   RUNTIME     
+     _LINC                                     CE3F       5       5       2   RUNTIME     
+     _LMUL                                     CE44      27      39       1   RUNTIME     
+     _LMULU16x32                               CE6B       F      15       2   RUNTIME     
+     _lDivMod                                  CE7A      B9     185       1   RUNTIME     
+     _LDIVU                                    CF33       E      14      13   RUNTIME     
+     _CASE_DIRECT_BYTE                         CF41       5       5       2   RUNTIME     
+     _CASE_CHECKED_BYTE                        CF46      14      20       5   RUNTIME     
+     _CASE_SEARCH_8_BYTE                       CF5A      1A      26       7   RUNTIME     
 - VARIABLES:
 MODULE:                 -- lcd.c.o --
 - PROCEDURES:
-     LCD_Init                                  C569      5F      95       1   .text       
-     LCD_Inst                                  C5C8      1A      26       5   .text       
-     LCD_Data                                  C5E2      1A      26       1   .text       
-     LCD_Addr                                  C5FC       A      10       1   .text       
-     LCD_AddrXY                                C606      34      52       1   .text       
-     LCD_String                                C63A       F      15       1   .text       
-     LCD_StringXY                              C649       F      15      15   .text       
-     LCD_Busy                                  C658      20      32       2   .text       
+     LCD_Init                                  C5C9      5F      95       1   .text       
+     LCD_Inst                                  C628      1A      26       5   .text       
+     LCD_Data                                  C642      1A      26       1   .text       
+     LCD_Addr                                  C65C       A      10       1   .text       
+     LCD_AddrXY                                C666      34      52       1   .text       
+     LCD_String                                C69A       F      15       1   .text       
+     LCD_StringXY                              C6A9       F      15      15   .text       
+     LCD_Busy                                  C6B8      20      32       2   .text       
 - VARIABLES:
 MODULE:                 -- pit.c.o --
 - PROCEDURES:
-     PIT_Init                                  C678      7F     127       1   .text       
-     FindFactors                               C6F7     105     261       2   .text       
+     PIT_Init                                  C6D8      7F     127       2   .text       
+     PIT_Sleep_ms                              C757      67     103       2   .text       
+     FindFactors                               C7BE     105     261       2   .text       
 - VARIABLES:
 MODULE:                 -- pll.c.o --
 - PROCEDURES:
-     PLL_To20MHz                               C7FC      15      21       1   .text       
+     PLL_To20MHz                               C8C3      15      21       1   .text       
 - VARIABLES:
 MODULE:                 -- sci.c.o --
 - PROCEDURES:
-     SCI0_Init                                 C811     131     305      23   .text       
-     SCI0_BRead                                C942       7       7       1   .text       
-     SCI0_TxByte_Block                         C949       9       9       1   .text       
+     SCI0_Init                                 C8D8     131     305      23   .text       
+     SCI0_Read                                 CA09      14      20       1   .text       
+     SCI0_TxByte_Block                         CA1D       9       9       1   .text       
 - VARIABLES:
 MODULE:                 -- segs.c.o --
 - PROCEDURES:
-     Segs_Init                                 C952       D      13       1   .text       
-     Segs_Custom                               C95F      21      33       1   .text       
-     Segs_ClearAll                             C980       C      12       1   .text       
-     Segs_Clear                                C98C       7       7       1   .text       
+     Segs_Init                                 CA26       D      13       1   .text       
+     Segs_Custom                               CA33      21      33       1   .text       
+     Segs_ClearAll                             CA54       C      12       1   .text       
+     Segs_Clear                                CA60       7       7       1   .text       
 - VARIABLES:
 MODULE:                 -- swled.c.o --
 - PROCEDURES:
-     SWLInit                                   C993       D      13       1   .text       
-     SWLRead                                   C9A0       8       8       1   .text       
-     SWLSet                                    C9A8       A      10       3   .text       
-     SWLClear                                  C9B2       8       8       2   .text       
-     SWLPressed                                C9BA       C      12       5   .text       
-     SWLSwitchTransition                       C9C6      19      25       1   .text       
+     SWLInit                                   CA67       D      13       1   .text       
+     SWLRead                                   CA74       8       8       1   .text       
+     SWLSet                                    CA7C       A      10       3   .text       
+     SWLClear                                  CA86       8       8       2   .text       
+     SWLPressed                                CA8E       C      12       5   .text       
+     SWLSwitchTransition                       CA9A      19      25       1   .text       
 - VARIABLES:
      lastStates.1                              2102       1       1       2   .bss        
 MODULE:                 -- timer.c.o --
 - PROCEDURES:
-     Timer_Init                                C9DF      FC     252       2   .text       
-     Timer_CalculateCountMilli                 CADB      2D      45       2   .text       
-     Timer_Sleep                               CB08      70     112       2   .text       
+     Timer_Init                                CAB3      FC     252       2   .text       
+     Timer_CalculateCountMilli                 CBAF      2D      45       2   .text       
+     Timer_Sleep                               CBDC      70     112       2   .text       
 - VARIABLES:
      globalBusClock                            2103       4       4       6   .common     
+MODULE:                 -- pulse.c.o --
+- PROCEDURES:
+     Pulse_Init_16Bit                          CC4C      80     128       1   .text       
+     Pulse_SetClockPrescales                   CCCC      2E      46       1   .text       
+     Pulse_SetPeriod_16Bit                     CCFA      2C      44       1   .text       
+     Pulse_SetDuty_16Bit                       CD26      2C      44       3   .text       
+     Pulse_SetPolarity                         CD52      17      23       1   .text       
+     Pulse_SelectClock                         CD69      AA     170       1   .text       
+     Pulse_ChannelControl                      CE13      18      24       1   .text       
+- VARIABLES:
 
 *********************************************************************************************
 MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
   mc9s12xdp512.c.o                           768      0      0
-  main.c.o                                     2    672    632
+  main.c.o                                     2    768    632
   Start12.c.o                                  0     49      0
   rtshc12.c.o (ansixs.lib)                     0    329      0
   lcd.c.o                                      0    271      0
-  pit.c.o                                      0    388      0
+  pit.c.o                                      0    491      0
   pll.c.o                                      0     21      0
-  sci.c.o                                      0    321      0
+  sci.c.o                                      0    334      0
   segs.c.o                                     0     65      0
   swled.c.o                                    1     76      0
   timer.c.o                                    4    409      0
+  pulse.c.o                                    0    479      0
   other                                      256     36      2
 
 *********************************************************************************************
@@ -1501,12 +1514,14 @@ SECTION USE IN OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
 SECTION: ".text"
   main UpdateTestDisplay UpdateSortingColour PerformTest ChipIsolatorTest 
-  ColourIdentificationTest DisplayIdentifiedColour ChipSortingTest PIT0Int 
-  LCD_Init LCD_Inst LCD_Data LCD_Addr LCD_AddrXY LCD_String LCD_StringXY 
-  LCD_Busy PIT_Init FindFactors PLL_To20MHz SCI0_Init SCI0_BRead 
+  ColourIdentificationTest UpdateColour ChipSortingTest PIT0Int LCD_Init 
+  LCD_Inst LCD_Data LCD_Addr LCD_AddrXY LCD_String LCD_StringXY LCD_Busy 
+  PIT_Init PIT_Sleep_ms FindFactors PLL_To20MHz SCI0_Init SCI0_Read 
   SCI0_TxByte_Block Segs_Init Segs_Custom Segs_ClearAll Segs_Clear SWLInit 
   SWLRead SWLSet SWLClear SWLPressed SWLSwitchTransition Timer_Init 
-  Timer_CalculateCountMilli Timer_Sleep 
+  Timer_CalculateCountMilli Timer_Sleep Pulse_Init_16Bit 
+  Pulse_SetClockPrescales Pulse_SetPeriod_16Bit Pulse_SetDuty_16Bit 
+  Pulse_SetPolarity Pulse_SelectClock Pulse_ChannelControl 
 SECTION: ".bss"
   buttonLockout lastStates.1 
 SECTION: ".init"
@@ -3421,33 +3436,33 @@ OBJECT LIST SORTED BY ADDRESS
      _VREGAPICL                                 2F2       1       1       0   .abs_section_2f2
      _VREGAPITR                                 2F3       1       1       0   .abs_section_2f3
      _VREGAPIR                                  2F4       2       2       0   .abs_section_2f4
-     _PWME                                      300       1       1       0   .abs_section_300
-     _PWMPOL                                    301       1       1       0   .abs_section_301
-     _PWMCLK                                    302       1       1       0   .abs_section_302
-     _PWMPRCLK                                  303       1       1       0   .abs_section_303
+     _PWME                                      300       1       1       3   .abs_section_300
+     _PWMPOL                                    301       1       1       3   .abs_section_301
+     _PWMCLK                                    302       1       1      16   .abs_section_302
+     _PWMPRCLK                                  303       1       1       6   .abs_section_303
      _PWMCAE                                    304       1       1       0   .abs_section_304
-     _PWMCTL                                    305       1       1       0   .abs_section_305
-     _PWMSCLA                                   308       1       1       0   .abs_section_308
-     _PWMSCLB                                   309       1       1       0   .abs_section_309
+     _PWMCTL                                    305       1       1       4   .abs_section_305
+     _PWMSCLA                                   308       1       1       1   .abs_section_308
+     _PWMSCLB                                   309       1       1       1   .abs_section_309
      _PWMCNT01                                  30C       2       2       0   .abs_section_30c
      _PWMCNT23                                  30E       2       2       0   .abs_section_30e
      _PWMCNT45                                  310       2       2       0   .abs_section_310
      _PWMCNT67                                  312       2       2       0   .abs_section_312
-     _PWMPER01                                  314       2       2       0   .abs_section_314
-     _PWMPER23                                  316       2       2       0   .abs_section_316
-     _PWMPER45                                  318       2       2       0   .abs_section_318
-     _PWMPER67                                  31A       2       2       0   .abs_section_31a
-     _PWMDTY01                                  31C       2       2       0   .abs_section_31c
-     _PWMDTY23                                  31E       2       2       0   .abs_section_31e
-     _PWMDTY45                                  320       2       2       0   .abs_section_320
-     _PWMDTY67                                  322       2       2       0   .abs_section_322
+     _PWMPER01                                  314       2       2       1   .abs_section_314
+     _PWMPER23                                  316       2       2       1   .abs_section_316
+     _PWMPER45                                  318       2       2       1   .abs_section_318
+     _PWMPER67                                  31A       2       2       1   .abs_section_31a
+     _PWMDTY01                                  31C       2       2       1   .abs_section_31c
+     _PWMDTY23                                  31E       2       2       1   .abs_section_31e
+     _PWMDTY45                                  320       2       2       1   .abs_section_320
+     _PWMDTY67                                  322       2       2       1   .abs_section_322
      _PWMSDN                                    324       1       1       0   .abs_section_324
      _PITCFLMT                                  340       1       1       1   .abs_section_340
      _PITFLT                                    341       1       1       0   .abs_section_341
      _PITCE                                     342       1       1       2   .abs_section_342
      _PITMUX                                    343       1       1       1   .abs_section_343
      _PITINTE                                   344       1       1       4   .abs_section_344
-     _PITTF                                     345       1       1       2   .abs_section_345
+     _PITTF                                     345       1       1       5   .abs_section_345
      _PITMTLD0                                  346       1       1       1   .abs_section_346
      _PITMTLD1                                  347       1       1       1   .abs_section_347
      _PITLD0                                    348       2       2       1   .abs_section_348
@@ -3515,52 +3530,60 @@ OBJECT LIST SORTED BY ADDRESS
      STRING.Colour...Black.......28            C28A      15      21       1   .rodata1    
      STRING.Colour...Other.......29            C29F      15      21       1   .rodata1    
      STRING.Unexpected.character.30            C2B4      15      21       1   .rodata1    
-     main                                      C2C9      FA     250       2   .text       
-     UpdateTestDisplay                         C3C3      B9     185       2   .text       
-     UpdateSortingColour                       C47C      56      86       1   .text       
-     PerformTest                               C4D2      1F      31       1   .text       
-     ChipIsolatorTest                          C4F1       1       1       1   .text       
-     ColourIdentificationTest                  C4F2       C      12       1   .text       
-     DisplayIdentifiedColour                   C4FE      5B      91       1   .text       
-     ChipSortingTest                           C559       1       1       1   .text       
-     PIT0Int                                   C55A       F      15       1   .text       
-     LCD_Init                                  C569      5F      95       1   .text       
-     LCD_Inst                                  C5C8      1A      26       5   .text       
-     LCD_Data                                  C5E2      1A      26       1   .text       
-     LCD_Addr                                  C5FC       A      10       1   .text       
-     LCD_AddrXY                                C606      34      52       1   .text       
-     LCD_String                                C63A       F      15       1   .text       
-     LCD_StringXY                              C649       F      15      15   .text       
-     LCD_Busy                                  C658      20      32       2   .text       
-     PIT_Init                                  C678      7F     127       1   .text       
-     FindFactors                               C6F7     105     261       2   .text       
-     PLL_To20MHz                               C7FC      15      21       1   .text       
-     SCI0_Init                                 C811     131     305      23   .text       
-     SCI0_BRead                                C942       7       7       1   .text       
-     SCI0_TxByte_Block                         C949       9       9       1   .text       
-     Segs_Init                                 C952       D      13       1   .text       
-     Segs_Custom                               C95F      21      33       1   .text       
-     Segs_ClearAll                             C980       C      12       1   .text       
-     Segs_Clear                                C98C       7       7       1   .text       
-     SWLInit                                   C993       D      13       1   .text       
-     SWLRead                                   C9A0       8       8       1   .text       
-     SWLSet                                    C9A8       A      10       3   .text       
-     SWLClear                                  C9B2       8       8       2   .text       
-     SWLPressed                                C9BA       C      12       5   .text       
-     SWLSwitchTransition                       C9C6      19      25       1   .text       
-     Timer_Init                                C9DF      FC     252       2   .text       
-     Timer_CalculateCountMilli                 CADB      2D      45       2   .text       
-     Timer_Sleep                               CB08      70     112       2   .text       
-     _ISHL                                     CB78       B      11       1   RUNTIME     
-     _LNEG                                     CB83       9       9       2   RUNTIME     
-     _LINC                                     CB8C       5       5       1   RUNTIME     
-     _LMUL                                     CB91      27      39       1   RUNTIME     
-     _LMULU16x32                               CBB8       F      15       2   RUNTIME     
-     _lDivMod                                  CBC7      B9     185       1   RUNTIME     
-     _LDIVU                                    CC80       E      14      13   RUNTIME     
-     _CASE_DIRECT_BYTE                         CC8E       5       5       1   RUNTIME     
-     _CASE_CHECKED_BYTE                        CC93      14      20       5   RUNTIME     
-     _CASE_SEARCH_8_BYTE                       CCA7      1A      26       2   RUNTIME     
+     main                                      C2C9     114     276       2   .text       
+     UpdateTestDisplay                         C3DD      B9     185       2   .text       
+     UpdateSortingColour                       C496      56      86       1   .text       
+     PerformTest                               C4EC      1F      31       1   .text       
+     ChipIsolatorTest                          C50B      3E      62       1   .text       
+     ColourIdentificationTest                  C549      15      21       1   .text       
+     UpdateColour                              C55E      5B      91       1   .text       
+     ChipSortingTest                           C5B9       1       1       1   .text       
+     PIT0Int                                   C5BA       F      15       1   .text       
+     LCD_Init                                  C5C9      5F      95       1   .text       
+     LCD_Inst                                  C628      1A      26       5   .text       
+     LCD_Data                                  C642      1A      26       1   .text       
+     LCD_Addr                                  C65C       A      10       1   .text       
+     LCD_AddrXY                                C666      34      52       1   .text       
+     LCD_String                                C69A       F      15       1   .text       
+     LCD_StringXY                              C6A9       F      15      15   .text       
+     LCD_Busy                                  C6B8      20      32       2   .text       
+     PIT_Init                                  C6D8      7F     127       2   .text       
+     PIT_Sleep_ms                              C757      67     103       2   .text       
+     FindFactors                               C7BE     105     261       2   .text       
+     PLL_To20MHz                               C8C3      15      21       1   .text       
+     SCI0_Init                                 C8D8     131     305      23   .text       
+     SCI0_Read                                 CA09      14      20       1   .text       
+     SCI0_TxByte_Block                         CA1D       9       9       1   .text       
+     Segs_Init                                 CA26       D      13       1   .text       
+     Segs_Custom                               CA33      21      33       1   .text       
+     Segs_ClearAll                             CA54       C      12       1   .text       
+     Segs_Clear                                CA60       7       7       1   .text       
+     SWLInit                                   CA67       D      13       1   .text       
+     SWLRead                                   CA74       8       8       1   .text       
+     SWLSet                                    CA7C       A      10       3   .text       
+     SWLClear                                  CA86       8       8       2   .text       
+     SWLPressed                                CA8E       C      12       5   .text       
+     SWLSwitchTransition                       CA9A      19      25       1   .text       
+     Timer_Init                                CAB3      FC     252       2   .text       
+     Timer_CalculateCountMilli                 CBAF      2D      45       2   .text       
+     Timer_Sleep                               CBDC      70     112       2   .text       
+     Pulse_Init_16Bit                          CC4C      80     128       1   .text       
+     Pulse_SetClockPrescales                   CCCC      2E      46       1   .text       
+     Pulse_SetPeriod_16Bit                     CCFA      2C      44       1   .text       
+     Pulse_SetDuty_16Bit                       CD26      2C      44       3   .text       
+     Pulse_SetPolarity                         CD52      17      23       1   .text       
+     Pulse_SelectClock                         CD69      AA     170       1   .text       
+     Pulse_ChannelControl                      CE13      18      24       1   .text       
+     _ISHL                                     CE2B       B      11       1   RUNTIME     
+     _LNEG                                     CE36       9       9       2   RUNTIME     
+     _LINC                                     CE3F       5       5       2   RUNTIME     
+     _LMUL                                     CE44      27      39       1   RUNTIME     
+     _LMULU16x32                               CE6B       F      15       2   RUNTIME     
+     _lDivMod                                  CE7A      B9     185       1   RUNTIME     
+     _LDIVU                                    CF33       E      14      13   RUNTIME     
+     _CASE_DIRECT_BYTE                         CF41       5       5       2   RUNTIME     
+     _CASE_CHECKED_BYTE                        CF46      14      20       5   RUNTIME     
+     _CASE_SEARCH_8_BYTE                       CF5A      1A      26       7   RUNTIME     
      _Vector_66                                FF7A       2       2       0   .abs_section_ff7a
 
 *********************************************************************************************
@@ -3577,9 +3600,9 @@ lcd.c.o:
   LCD_WrappingString LCD_ClearLine LCD_DispControl LCD_Clear LCD_Home 
   LCD_ShiftL LCD_ShiftR 
 pit.c.o:
-  PIT_Sleep_ms PIT_Sleep_us 
+  PIT_Sleep_us 
 sci.c.o:
-  SCI0_Init_Manual SCI0_Read SCI0_TxByte_NonBlock SCI0_TxStr SCI2_Init 
+  SCI0_Init_Manual SCI0_BRead SCI0_TxByte_NonBlock SCI0_TxStr SCI2_Init 
   SCI2_Init_Manual SCI2_Read SCI2_BRead SCI2_TxByte_Block SCI2_TxByte_NonBlock 
   SCI2_TxStr 
 segs.c.o:
@@ -3589,9 +3612,11 @@ swled.c.o:
   SWLToggle 
 timer.c.o:
   Timer_CalculateCountMicro 
+pulse.c.o:
+  Pulse_Init_8Bit Pulse_SetPeriod_8Bit Pulse_SetDuty_8Bit 
 NOT USED VARIABLES
 main.c.o:
-  GlobalBusRate 
+  GlobalBusRate MinServoDuty MaxServoDuty 
 rtshc12.c.o (ansixs.lib):
   _PowOfTwo_8 _PowOfTwo_16 _PowOfTwo_32 errno 
 lcd.c.o:
@@ -3600,7 +3625,7 @@ lcd.c.o:
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0xCCC1 ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xCF74 ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
@@ -3610,9 +3635,9 @@ OBJECT-DEPENDENCIES SECTION
 Init                      USES _startupData 
 _Startup                  USES __SEG_END_SSTACK Init main 
 main                      USES PLL_To20MHz SWLInit LCD_Init Segs_Init PIT_Init 
-                                SCI0_Init UpdateTestDisplay SWLSet buttonLockout 
-                                SWLSwitchTransition SWLPressed UpdateSortingColour SWLClear 
-                                PerformTest main 
+                                SCI0_Init Pulse_Init_16Bit UpdateTestDisplay SWLSet 
+                                buttonLockout SWLSwitchTransition SWLPressed 
+                                UpdateSortingColour SWLClear PerformTest main 
 UpdateTestDisplay         USES _CASE_CHECKED_BYTE 
                                 STRING...Sorter.Test.Mode...1 LCD_StringXY STRING.Left.Right.Swap.Test.2 
                                 STRING.Up.Down.Test.Options.3 STRING..Middle.starts.test..4 
@@ -3629,9 +3654,9 @@ UpdateSortingColour       USES _CASE_CHECKED_BYTE
                                 STRING.Colour...Other.......23 LCD_StringXY 
 PerformTest               USES _CASE_CHECKED_BYTE ChipIsolatorTest 
                                 ColourIdentificationTest ChipSortingTest 
-ColourIdentificationTest  USES SCI0_TxByte_Block SCI0_BRead 
-                                DisplayIdentifiedColour 
-DisplayIdentifiedColour   USES _CASE_SEARCH_8_BYTE 
+ChipIsolatorTest          USES Pulse_SetDuty_16Bit PIT_Sleep_ms 
+ColourIdentificationTest  USES SCI0_TxByte_Block SCI0_Read UpdateColour 
+UpdateColour              USES _CASE_SEARCH_8_BYTE 
                                 STRING.Colour...Red.........24 STRING.Colour...Green.......25 
                                 STRING.Colour...Blue........26 STRING.Colour...White.......27 
                                 STRING.Colour...Black.......28 STRING.Colour...Other.......29 
@@ -3648,11 +3673,12 @@ LCD_StringXY              USES LCD_AddrXY LCD_String
 LCD_Busy                  USES _PORTK _DDRH _PTH 
 PIT_Init                  USES FindFactors _PITMTLD0 _PITLD0 _PITINTE _PITCE 
                                 _PITMUX _PITMTLD1 _PITLD1 _PITCFLMT _PITTF 
+PIT_Sleep_ms              USES PIT_Init _PITTF _LINC 
 FindFactors               USES _LDIVU _LMUL FindFactors _LNEG 
 PLL_To20MHz               USES _SYNR _REFDV _CLKSEL _PLLCTL _CRGFLG 
 SCI0_Init                 USES _CASE_CHECKED_BYTE SCI0_Init _LDIVU _SCI0BD 
                                 _SCI0CR2 _LMULU16x32 
-SCI0_BRead                USES _SCI0SR1 _SCI0DRL 
+SCI0_Read                 USES _SCI0SR1 _SCI0DRL 
 SCI0_TxByte_Block         USES _SCI0SR1 _SCI0DRL 
 Segs_Init                 USES _PORTAB _DDRAB Segs_ClearAll 
 Segs_Custom               USES _PORTAB 
@@ -3671,6 +3697,17 @@ Timer_Init                USES globalBusClock _TSCR2 _TIOS
 Timer_CalculateCountMilli USES _TSCR2 _ISHL globalBusClock _LDIVU _LMULU16x32 
 Timer_Sleep               USES _TSCR1 globalBusClock _TSCR2 Timer_Init 
                                 Timer_CalculateCountMilli _TFLG1 _TC6 _LINC 
+Pulse_Init_16Bit          USES _CASE_SEARCH_8_BYTE Pulse_SetClockPrescales 
+                                Pulse_SetPeriod_16Bit Pulse_SetDuty_16Bit Pulse_SelectClock 
+                                Pulse_SetPolarity _PWMCTL Pulse_ChannelControl 
+Pulse_SetClockPrescales   USES _PWMPRCLK _PWMSCLA _PWMSCLB 
+Pulse_SetPeriod_16Bit     USES _CASE_SEARCH_8_BYTE _PWMPER01 _PWMPER23 
+                                _PWMPER45 _PWMPER67 
+Pulse_SetDuty_16Bit       USES _CASE_SEARCH_8_BYTE _PWMDTY01 _PWMDTY23 
+                                _PWMDTY45 _PWMDTY67 
+Pulse_SetPolarity         USES _PWMPOL 
+Pulse_SelectClock         USES _CASE_DIRECT_BYTE _CASE_SEARCH_8_BYTE _PWMCLK 
+Pulse_ChannelControl      USES _PWME 
 _LDIVU                    USES _lDivMod 
 _Vector_66                USES PIT0Int 
 
@@ -3741,6 +3778,30 @@ DEPENDENCY TREE
  |  |  |  
  |  |  +- _LMULU16x32          (see above)
  |  |     
+ |  +- Pulse_Init_16Bit    
+ |  |  | 
+ |  |  +- _CASE_SEARCH_8_BYTE  (see above)
+ |  |  |  
+ |  |  +- Pulse_SetClockPrescales
+ |  |  |    
+ |  |  +- Pulse_SetPeriod_16Bit
+ |  |  |  | 
+ |  |  |  +- _CASE_SEARCH_8_BYTE  (see above)
+ |  |  |     
+ |  |  +- Pulse_SetDuty_16Bit 
+ |  |  |  | 
+ |  |  |  +- _CASE_SEARCH_8_BYTE  (see above)
+ |  |  |     
+ |  |  +- Pulse_SelectClock   
+ |  |  |  | 
+ |  |  |  +- _CASE_DIRECT_BYTE    (see above)
+ |  |  |  |  
+ |  |  |  +- _CASE_SEARCH_8_BYTE  (see above)
+ |  |  |     
+ |  |  +- Pulse_SetPolarity   
+ |  |  |    
+ |  |  +- Pulse_ChannelControl
+ |  |       
  |  +- UpdateTestDisplay   
  |  |  | 
  |  |  +- _CASE_CHECKED_BYTE   (see above)
@@ -3782,14 +3843,22 @@ DEPENDENCY TREE
  |     +- _CASE_CHECKED_BYTE   (see above)
  |     |  
  |     +- ChipIsolatorTest    
- |     |    
+ |     |  | 
+ |     |  +- Pulse_SetDuty_16Bit  (see above)
+ |     |  |  
+ |     |  +- PIT_Sleep_ms        
+ |     |     | 
+ |     |     +- PIT_Init             (see above)
+ |     |     |  
+ |     |     +- _LINC                (see above)
+ |     |        
  |     +- ColourIdentificationTest
  |     |  | 
  |     |  +- SCI0_TxByte_Block   
  |     |  |    
- |     |  +- SCI0_BRead          
+ |     |  +- SCI0_Read           
  |     |  |    
- |     |  +- DisplayIdentifiedColour
+ |     |  +- UpdateColour        
  |     |     | 
  |     |     +- _CASE_SEARCH_8_BYTE  (see above)
  |     |     |  
@@ -3814,5 +3883,5 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 8
-Total size of all blocks to be downloaded: 3271
+Total size of all blocks to be downloaded: 3962
 
